@@ -95,11 +95,13 @@ class GridFieldAddNewInlineButton implements GridField_HTMLProvider, GridField_S
 		foreach($grid->getColumns() as $column) {
 			if(in_array($column, $handled)) {
 				$field = $fields->dataFieldByName($column);
-				$field->setName(sprintf(
-					'%s[%s][{%%=o.num%%}][%s]', $grid->getName(), __CLASS__, $field->getName()
-				));
+				if (is_object($field)) {
+					$field->setName(sprintf(
+						'%s[%s][{%%=o.num%%}][%s]', $grid->getName(), __CLASS__, $field->getName()
+					));
 
-				$content = $field->Field();
+					$content = $field->Field();
+				}
 			} else {
 				$content = null;
 			}
